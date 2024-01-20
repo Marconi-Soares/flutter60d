@@ -15,7 +15,8 @@ extension StringExtension on String {
 void main(List<String> args) {
   // string();
   // boolean();
-  list();
+  // list();
+  sets();
 }
 
 void string() {
@@ -73,4 +74,16 @@ void list() {
       for (var female in females) female.toCapitalCase(),
   ];
   print(collectionIf);
+}
+
+void sets() {
+  Set<int> mySet = {1, 2, 3, 4};
+  Set<int> mySet2 = {5, 9, 12, 4, 1};
+  final res = mySet.intersection(mySet2);
+  print(res);
+}
+
+void maps() {
+  Map<String, String> map = {'name': 'marconi'};
+  print(map);
 }
