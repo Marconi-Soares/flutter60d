@@ -1,0 +1,6 @@
+name: "dart_package"
+environment:
+  sdk: ^3.2.5
+
+dev_dependencies:
+  lints: ^2.1.0
