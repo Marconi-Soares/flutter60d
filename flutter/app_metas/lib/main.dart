@@ -38,6 +38,58 @@ class AppBarExample extends StatelessWidget {
           ),
         ],
       ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          const Text("We move under cover and we move as one"),
+          const Text("Through the night, we have one shot to live another day"),
+          const Text("We cannot let a stray gunshot give us away"),
+          Center(
+            child: Container(
+              margin: const EdgeInsets.all(10.0),
+              color: Colors.amber[600],
+              width: 48.0,
+              height: 48.0,
+            ),
+          ),
+          Container(
+            constraints: BoxConstraints.expand(
+              height:
+                  Theme.of(context).textTheme.headlineMedium!.fontSize! * 1.1 +
+                      200.0,
+            ),
+            padding: const EdgeInsets.all(8.0),
+            color: Colors.blue[600],
+            alignment: Alignment.center,
+            transform: Matrix4.rotationZ(0.1),
+            child: Text(
+              "hello world",
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineMedium!
+                  .copyWith(color: Colors.white),
+            ),
+          ),
+          Center(
+            child: Container(
+              constraints: BoxConstraints.expand(
+                height:
+                    Theme.of(context).textTheme.headlineMedium!.fontSize! * 2,
+                width: 300.0,
+              ),
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(10.0),
+              color: Colors.red,
+              margin: const EdgeInsets.only(top: 50),
+              child: const Text(
+                "Olá mundo2",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
