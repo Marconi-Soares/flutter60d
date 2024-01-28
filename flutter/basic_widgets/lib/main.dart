@@ -9,9 +9,168 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MyScaffold(),
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: SizedBox(
+            height: 400,
+            child: ListWheelScrollView(
+                itemExtent: 100,
+                diameterRatio: 0.5,
+                children: List.generate(100, (i) => Text("Title $i"))),
+          ),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class MyLargeList extends StatelessWidget {
+  const MyLargeList({super.key, required this.items});
+  final List<String> items;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scrollbar(
+      thumbVisibility: true,
+      trackVisibility: true,
+      child: ListView.builder(
+          itemCount: 100,
+          prototypeItem: ListTile(title: Text(items.first)),
+          itemBuilder: (context, index) {
+            return ListTile(title: Text(items[index]));
+          }),
+    );
+  }
+}
+
+class MyLayoutBuild extends StatelessWidget {
+  const MyLayoutBuild({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, constraints) {
+      const int numItems = 15;
+      return SingleChildScrollView(
+        child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(
+                numItems,
+                (index) => ItemWidget(text: 'Item $index'),
+              ),
+            )),
+      );
+    });
+  }
+}
+
+class ItemWidget extends StatelessWidget {
+  const ItemWidget({super.key, required this.text});
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: SizedBox(
+        height: 150,
+        child: Center(
+          child: Text(text),
+        ),
+      ),
+    );
+  }
+}
+
+abstract class ListItem {
+  Widget buildTitle(BuildContext context);
+  Widget buildStubtitle(BuildContext context);
+}
+
+class HeadingItem implements ListItem {
+  final String heading;
+  HeadingItem(this.heading);
+
+  @override
+  Widget buildTitle(BuildContext context) {
+    return Text(heading, style: Theme.of(context).textTheme.headlineSmall);
+  }
+
+  @override
+  Widget buildStubtitle(BuildContext context) => const SizedBox.shrink();
+}
+
+class MessageItem implements ListItem {
+  final String sender;
+  final String body;
+
+  MessageItem(this.sender, this.body);
+
+  @override
+  Widget buildTitle(BuildContext context) => Text(sender);
+
+  @override
+  Widget buildStubtitle(BuildContext context) => Text(body);
+}
+
+class MyList extends StatelessWidget {
+  const MyList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final items = List<ListItem>.generate(
+      50,
+      (i) => i % 6 == 0
+          ? HeadingItem('Heading $i')
+          : MessageItem('Sender $i', 'Message body $i'),
+    );
+    return ListView.builder(
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        final item = items[index];
+        return ListTile(
+          title: item.buildTitle(context),
+          subtitle: item.buildStubtitle(context),
+        );
+      },
+    );
+  }
+}
+
+class MyGrid extends StatelessWidget {
+  const MyGrid({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      crossAxisCount: 2,
+      mainAxisSpacing: 10,
+      crossAxisSpacing: 10,
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      children: List.generate(100, (index) {
+        return Center(
+            child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
+          decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Text(
+            'Item $index',
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall!
+                .copyWith(color: Colors.white70),
+            textAlign: TextAlign.center,
+          ),
+        ));
+      }),
     );
   }
 }
