@@ -1,9 +1,10 @@
 import 'dart:developer';
 
 void main(List<String> args) {
-  debugger();
-  printName(args);
-  largeIntArr();
+  verifying();
+  // debugger();
+  // printName(args);
+  // largeIntArr();
 }
 
 void printName(List<String> names) {
@@ -17,4 +18,14 @@ void largeIntArr() {
   for (var i = 0; i < 1000000; i++) {
     arr.add(i);
   }
+}
+
+void verifying() {
+  bool condition = false;
+  if (condition) {
+    print("é verdadeiro");
+    return;
+  }
+  print("é falso");
+  return;
 }
